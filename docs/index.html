@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>projectdetect-zig — detect a project's type in Zig</title>
+<meta name="description" content="The Zig port of projectdetect — inspect a directory to see what project type(s) it is, walk a tree for every project root, and resolve which project a file belongs to. 28 built-in types, zero dependencies.">
+<meta property="og:title" content="projectdetect-zig">
+<meta property="og:description" content="The Zig port of projectdetect — detect project types, find project roots, and resolve a file's project. 28 built-in types, zero dependencies.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%23161b22'/><rect x='5' y='12' width='3.5' height='7' rx='1' fill='%23a371f7'/><rect x='10.25' y='8' width='3.5' height='11' rx='1' fill='%23bd93ff'/><rect x='15.5' y='4' width='3.5' height='15' rx='1' fill='%23d2b3ff'/></svg>">
+<script>try{var t=localStorage.getItem("gl-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="gloam.css">
+</head>
+<body class="gl">
+<a class="gl-skip" href="#main">Skip to content</a>
+
+<header class="gl-nav">
+  <div class="gl-wrap">
+    <span class="gl-brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="var(--gl-panel-2)"/>
+        <rect x="5" y="12" width="3.5" height="7" rx="1" fill="var(--gl-accent)"/>
+        <rect x="10.25" y="8" width="3.5" height="11" rx="1" fill="var(--gl-accent-2)"/>
+        <rect x="15.5" y="4" width="3.5" height="15" rx="1" fill="#d2b3ff"/>
+      </svg>
+      projectdetect-zig
+    </span>
+    <button class="gl-nav-toggle" aria-label="Toggle navigation" data-gl-nav-toggle="nav" aria-expanded="false">☰</button>
+    <nav id="nav">
+      <a href="#features">Features</a>
+      <a href="#usage">Usage</a>
+      <a href="#install">Install</a>
+      <button class="gl-theme-toggle" data-gl-theme-toggle aria-label="Toggle color theme" aria-pressed="true">
+        <svg class="gl-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="gl-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      </button>
+      <a class="gl-btn ghost" href="https://github.com/richardwooding/projectdetect-zig">GitHub ★</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="gl-hero">
+    <div class="gl-wrap gl-hero-grid">
+      <div>
+        <p class="gl-eyebrow">zig · 28 types · zero deps</p>
+        <h1>Detect a project's type <span class="gl-grad">in Zig.</span></h1>
+        <p class="sub">The Zig port of projectdetect — inspect a directory to see what project type(s) it is, walk a tree for every project root, and resolve which project a file belongs to. 28 built-in types, zero dependencies.</p>
+        <div class="gl-cta">
+          <a class="gl-btn primary" href="#install">Install</a>
+          <a class="gl-btn ghost" href="https://github.com/richardwooding/projectdetect-zig">View on GitHub</a>
+        </div>
+        <p class="gl-hint">MIT licensed · no third-party dependencies · Zig 0.16</p>
+      </div>
+      <div class="gl-term">
+        <div class="bar">
+          <span class="dot" style="background:#ff5f56"></span>
+          <span class="dot" style="background:#ffbd2e"></span>
+          <span class="dot" style="background:#27c93f"></span>
+          <span class="t">main.zig</span>
+        </div>
+<pre><span class="k">const</span> <span class="n">projectdetect</span> = <span class="n">@import</span>(<span class="ok">"projectdetect"</span>);
+
+<span class="k">var</span> <span class="n">reg</span> = <span class="k">try</span> <span class="n">projectdetect</span>.Registry.initWithBuiltins(gpa);
+<span class="k">defer</span> <span class="n">reg</span>.deinit();
+<span class="k">const</span> <span class="n">matches</span> = <span class="k">try</span> <span class="n">reg</span>.detect(gpa, <span class="ok">"."</span>);
+<span class="k">defer</span> gpa.free(<span class="n">matches</span>);
+<span class="k">for</span> (<span class="n">matches</span>) |m|
+    std.debug.print(<span class="ok">"{s} (via {s})\n"</span>, .{ m.type, m.indicator });</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="gl-section" id="features">
+    <div class="gl-wrap">
+      <p class="gl-eyebrow">what you get</p>
+      <h2>Project detection, ported faithfully to Zig.</h2>
+      <p class="gl-lede" style="margin-top:14px">The same detection model as the Go original — indicators, multi-match, and root-finding — with zero third-party dependencies.</p>
+      <div class="gl-grid feat" style="margin-top:32px">
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></span>28 built-in types</h3>
+          <p><code>go</code>, <code>node</code>, <code>rust</code>, <code>python</code>, <code>ruby</code>, <code>java-maven</code>/<code>gradle</code>, <code>dotnet</code>, <code>terraform</code>, <code>docker-compose</code>, <code>swift</code>, <code>php</code>, <code>scala</code>, <code>cmake</code>, <code>autotools</code>, <code>r</code>, <code>zig</code>, <code>perl</code>, <code>matlab</code>, plus eight static-site generators.</p>
+        </div>
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 6v12"/></svg></span>Four core APIs</h3>
+          <p><code>detect(dir)</code> for a single directory, <code>find(root, opts)</code> to walk a tree, <code>resolveForPath(file)</code> / <code>Resolver</code> to map a file to its project, and <code>collectBuildExcludes(root)</code> for build-artefact dirs.</p>
+        </div>
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>Multi-match</h3>
+          <p>One directory can match several types at once — a Go module that also ships a <code>docker-compose.yml</code> matches both. You get every match, not just the first.</p>
+        </div>
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 10h10v4H4zM4 16h16v4H4z"/></svg></span>Three indicator kinds</h3>
+          <p><code>has_file</code> (case-insensitive), <code>has_glob</code> for file-basename patterns, and <code>has_subdir_glob</code> for directory markers like <code>*.xcodeproj</code>.</p>
+        </div>
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>Zero dependencies</h3>
+          <p>No third-party imports — including a small built-in YAML reader for loading custom project types from a config file.</p>
+        </div>
+
+        <div class="gl-card">
+          <h3><span class="gl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span>Faithful Go-port parity</h3>
+          <p>The same detection model as the Go original, with two deliberate differences: no CEL indicators, and limited user-wide config discovery on Zig 0.16.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="gl-section" id="usage">
+    <div class="gl-wrap">
+      <p class="gl-eyebrow">usage</p>
+      <h2>Detect a directory, wire up the module.</h2>
+      <p class="gl-lede" style="margin-top:14px">Initialise a registry with the built-ins, then ask what a directory is. Wiring the dependency into <code>build.zig</code> takes two lines.</p>
+      <div class="gl-split" style="margin-top:28px">
+<pre class="gl-code"><span class="c">// Detect what this directory is</span>
+<span class="k">var</span> reg = <span class="k">try</span> projectdetect.Registry.initWithBuiltins(gpa);
+<span class="k">defer</span> reg.deinit();
+<span class="k">const</span> matches = <span class="k">try</span> reg.detect(gpa, <span class="s">"."</span>);
+<span class="k">defer</span> gpa.free(matches);
+<span class="k">for</span> (matches) |m|
+    std.debug.print(<span class="s">"{s}\n"</span>, .{ m.type });</pre>
+<pre class="gl-code"><span class="c">// build.zig — wire up the dependency</span>
+<span class="k">const</span> pd = b.dependency(<span class="s">"projectdetect"</span>, .{
+    .target = target,
+    .optimize = optimize,
+});
+exe.root_module.addImport(
+    <span class="s">"projectdetect"</span>,
+    pd.module(<span class="s">"projectdetect"</span>),
+);</pre>
+      </div>
+      <ul class="gl-badges" aria-label="Core APIs" style="margin-top:26px">
+        <li class="gl-lang">detect(dir)</li>
+        <li class="gl-lang">find(root, opts)</li>
+        <li class="gl-lang">resolveForPath(file)</li>
+        <li class="gl-lang">Resolver</li>
+        <li class="gl-lang">collectBuildExcludes(root)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="gl-section" id="install">
+    <div class="gl-wrap">
+      <p class="gl-eyebrow">install</p>
+      <h2>Add it to your build.</h2>
+      <p class="gl-lede" style="margin-top:14px">One <code>zig fetch</code> pulls it straight from GitHub into your <code>build.zig.zon</code>. Requires Zig 0.16.</p>
+      <div class="gl-install" style="margin-top:26px">
+        <div class="gl-snip">
+          <span class="lbl">zig</span>
+          <code id="i1">zig fetch --save git+https://github.com/richardwooding/projectdetect-zig</code>
+          <button class="gl-copy" data-gl-copy="i1">Copy</button>
+        </div>
+      </div>
+      <p class="gl-hint">There's no Zig package registry — fetch it straight from the <a href="https://github.com/richardwooding/projectdetect-zig">GitHub repo</a>. This is the Zig port of <a href="https://github.com/richardwooding/projectdetect">projectdetect</a> (the Go original).</p>
+    </div>
+  </section>
+</main>
+
+<footer class="gl-footer">
+  <div class="gl-wrap">
+    <span class="gl-brand" style="font-size:.98rem">projectdetect-zig · MIT · <span data-gl-year></span></span>
+    <nav class="gl-fnav">
+      <a href="https://richardwooding.github.io/">Richard Wooding</a>
+      <a href="https://github.com/richardwooding/projectdetect-zig">GitHub</a>
+      <a href="https://richardwooding.github.io/projectdetect/">Go original</a>
+      <a href="https://github.com/richardwooding/projectdetect-zig/blob/main/LICENSE">License</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="gloam.js" defer></script>
+</body>
+</html>
