@@ -5,6 +5,8 @@
 
 Detect what kind of project a directory is — **Zig 0.16.0**, zero third-party dependencies.
 
+**Website:** [richardwooding.github.io/projectdetect-zig](https://richardwooding.github.io/projectdetect-zig/)
+
 A Zig port of the Go library [`github.com/richardwooding/projectdetect`](https://github.com/richardwooding/projectdetect).
 
 `projectdetect` answers a few questions over a filesystem:
