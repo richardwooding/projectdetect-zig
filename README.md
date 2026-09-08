@@ -93,6 +93,12 @@ This is a faithful port of the detection model — same 28 built-ins, the same f
 - **No CEL indicators.** Zig has no CEL engine, so the `cel:` indicator is unsupported; registering one returns `error.CelUnsupported`. All built-ins and the other three indicator kinds work normally.
 - **User-wide config discovery is limited.** Per-project discovery (`./.file-search-on/project-types.yaml`) works. Zig 0.16's standard library routes the process environment through its new `Io` interface and exposes no stable public env-var accessor, so the *user-wide* config-dir layer is omitted from automatic discovery; pass an explicit directory via `entriesFrom` if you need it.
 
+## Sponsor
+
+If this saves you time, you can [sponsor its maintenance](https://github.com/sponsors/richardwooding).
+Sponsorship pays for the unglamorous half — triage, dependency bumps, release plumbing — and is
+never a condition of getting help here.
+
 ## License
 
 MIT © Richard Wooding
